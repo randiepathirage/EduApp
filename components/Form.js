@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import { View } from 'react-native'
 import tw from 'tailwind-react-native-classnames'
+
 import FormLabel from './FormLabel'
 import FormInput from './FormInput'
 import FormButton from './FormButton'
+
 import { useNavigation } from '@react-navigation/core'
+
 
 const FormInputGroup = ({ children }) => {
     return (
@@ -16,10 +19,12 @@ const FormInputGroup = ({ children }) => {
 
 export default function Form({ signup, onsubmit }) {
     const navigation = useNavigation(),
-        screen = signup ? "Home" : "Register"
+        screen = signup ? "Login" : "Register"
 
     const [email, setEmail] = useState(""),
         [password, setPassword] = useState("")
+
+
     return (
         <View>
             <FormInputGroup>
@@ -37,11 +42,12 @@ export default function Form({ signup, onsubmit }) {
                 />
             </FormInputGroup>
 
-            <FormButton primary={true} text={!signup ? "Login" : "Register"}
+            <FormButton primary={true} text={!signup ? "LOGIN" : "REGISTER"}
                 onPress={() => onsubmit(email, password)} />
 
-            <FormButton primary={false} text={signup ? "Login" : "Register"}
+            <FormButton primary={false} text={signup ? "LOGIN" : "REGISTER"}
                 onPress={() => navigation.navigate(screen)} />
+
         </View>
 
     )

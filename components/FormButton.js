@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, Text } from 'react-native'
+import { TouchableOpacity, Text, StyleSheet } from 'react-native'
 import tw from 'tailwind-react-native-classnames'
 
 export default function FormButton(props) {
@@ -10,15 +10,33 @@ export default function FormButton(props) {
 
     } = props
 
-    let primaryStyle = tw`bg-blue-500 border-none px-6 py-3 rounded my-3`
-    let SecondaryStyle = tw`border-blue-500 border bg-tranparent px-6 py-3 rounded my-3`
+    // let primaryStyle = tw`bg-white border-none px-6 py-3 rounded my-3`
+    let SecondaryStyle = tw`border-blue-500 border bg-transparent px-6 py-3 rounded my-3`
 
-    let primaryText = tw`text-center text-white font-bold`
-    let SecondaryText = tw`text-center text-blue-500 font-bold`
+    //let primaryText = tw`text-center text-teal-500 font-bold`
+    let SecondaryText = tw`text-center text-white font-bold`
 
     return (
-        <TouchableOpacity style={primary ? primaryStyle : SecondaryStyle} {...other}>
-            <Text style={primary ? primaryText : SecondaryText}>{text}</Text>
+        <TouchableOpacity style={primary ? styles.primaryStyle : SecondaryStyle} {...other}>
+            <Text style={primary ? styles.primaryText : SecondaryText}>{text}</Text>
         </TouchableOpacity>
     )
 }
+
+const styles = StyleSheet.create({
+    primaryStyle: {
+
+        backgroundColor: '#fff',
+        paddingVertical: 10,
+        paddingHorizontal: 6,
+        borderRadius: 6,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    primaryText: {
+        color: '#05676B',
+        alignSelf: 'center',
+        fontWeight: 'bold'
+    }
+});

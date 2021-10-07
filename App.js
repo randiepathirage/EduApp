@@ -3,11 +3,12 @@ import React, { useEffect } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 
-import Home from './screens/Home';
+import Login from './screens/Login';
 import Register from './screens/Register';
+import DetailsScreen from './screens/DetailsScreen'
 
 import firebase from 'firebase';
-import { config } from './firebaseConfig';
+import { config } from './firebaseconfig';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,9 +23,10 @@ export default function App() {
   }, [])
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Home" component={Home} />
+      <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen name="Details" component={DetailsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
