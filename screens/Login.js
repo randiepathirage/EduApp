@@ -35,8 +35,8 @@ export default function Login({ navigation }) {
             {!!successMessage && <Text style={tw`bg-green-400 p-1 my-2 text-red-700`}>{successMessage}</Text>}
             <Form signup={false} onsubmit={login} />
             <Button
-                title="Go to Details"
-                onPress={() => navigation.navigate('Details')} />
+                title="Go to Courses"
+                onPress={() => navigation.navigate('Courses')} />
 
         </View>
 

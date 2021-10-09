@@ -1,10 +1,19 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import Login from './Login';
+import Register from './Register';
+
+const Tab = createBottomTabNavigator();
 
 export default function DetailsScreen() {
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Details Screen</Text>
-        </View>
+
+        <Tab.Navigator >
+            <Tab.Screen name="Login" component={Login} />
+            <Tab.Screen name="Register" component={Register} />
+        </Tab.Navigator>
+
     );
 }
