@@ -8,9 +8,10 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Subcriptions from './Subcriptions';
 import Contributions from './Contributions';
 import Courses from './Courses';
+import Login from './Login';
 
 const HomeStack = createStackNavigator();
-const DetailsStack = createStackNavigator();
+const LoginStack = createStackNavigator();
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -52,44 +53,67 @@ const MainTabScreen = () => (
                 ),
             }}
         />
+
+        <Tab.Screen
+            name="Home"
+            component={LoginStackScreen}
+            options={{
+                tabBarLabel: 'Home',
+                tabBarColor: '#694fad',
+                tabBarIcon: ({ color }) => (
+                    <Icon name="ios-person" color={color} size={26} />
+                ),
+            }}
+        />
     </Tab.Navigator>
 );
 
 export default MainTabScreen;
 
-const HomeStackScreen = ({ navigation }) => (
-    <HomeStack.Navigator screenOptions={{
-        headerStyle: {
-            backgroundColor: '#009387',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-            fontWeight: 'bold'
-        }
-    }}>
-        <HomeStack.Screen name="Home" component={HomeScreen} options={{
-            title: 'Overview',
-            headerLeft: () => (
-                <Icon.Button name="ios-menu" size={25} backgroundColor="#009387" onPress={() => navigation.openDrawer()}></Icon.Button>
-            )
-        }} />
-    </HomeStack.Navigator>
+const LoginStackScreen = ({ navigation }) => (
+
+    <LoginStack.Navigator
+        initialRouteName="login"
+        activeColor="#fff"
+    >
+        <LoginStack.Screen
+            name="login"
+            component={Login}
+            options={{
+                title: 'Login',
+                headerLeft: () => (
+                    <Icon.Button
+                        name="ios-menu"
+                        backgroundColor='#fff'
+                        size={26}
+                        onPress={() => navigation.openDrawer()}></Icon.Button>
+                )
+            }}
+        />
+    </LoginStack.Navigator>
+
 );
 
-const DetailsStackScreen = ({ navigation }) => (
-    <DetailsStack.Navigator screenOptions={{
-        headerStyle: {
-            backgroundColor: '#1f65ff',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-            fontWeight: 'bold'
-        }
-    }}>
-        <DetailsStack.Screen name="Details" component={DetailsScreen} options={{
-            headerLeft: () => (
-                <Icon.Button name="ios-menu" size={25} backgroundColor="#1f65ff" onPress={() => navigation.openDrawer()}></Icon.Button>
-            )
-        }} />
-    </DetailsStack.Navigator>
+const RegisterStackScreen = ({ navigation }) => (
+
+    <RegisterStack.Navigator
+        initialRouteName="detail"
+        activeColor="#fff"
+    >
+        <RegisterStack.Screen
+            name="detail"
+            component={Register}
+            options={{
+                title: 'Register',
+                headerLeft: () => (
+                    <Icon.Button
+                        name="ios-menu"
+                        backgroundColor='#fff'
+                        size={26}
+                        onPress={() => navigation.openDrawer()}></Icon.Button>
+                )
+            }}
+        />
+    </RegisterStack.Navigator>
+
 );

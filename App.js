@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import Login from './screens/Login';
 import Register from './screens/Register';
 import Courses from './screens/Courses'
+import RootStackScreen from './screens/RootStackScreen';
 
 import firebase from 'firebase';
 import { config } from './firebaseconfig';
@@ -19,53 +20,6 @@ const LoginStack = createNativeStackNavigator();
 const RegisterStack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
-const LoginStackScreen = ({ navigation }) => (
-
-  <LoginStack.Navigator
-    initialRouteName="login"
-    activeColor="#fff"
-  >
-    <LoginStack.Screen
-      name="login"
-      component={Login}
-      options={{
-        title: 'Login',
-        headerLeft: () => (
-          <Icon.Button
-            name="ios-menu"
-            backgroundColor='#fff'
-            size={26}
-            onPress={() => navigation.openDrawer()}></Icon.Button>
-        )
-      }}
-    />
-  </LoginStack.Navigator>
-
-);
-
-const RegisterStackScreen = ({ navigation }) => (
-
-  <RegisterStack.Navigator
-    initialRouteName="detail"
-    activeColor="#fff"
-  >
-    <RegisterStack.Screen
-      name="detail"
-      component={Register}
-      options={{
-        title: 'Register',
-        headerLeft: () => (
-          <Icon.Button
-            name="ios-menu"
-            backgroundColor='#fff'
-            size={26}
-            onPress={() => navigation.openDrawer()}></Icon.Button>
-        )
-      }}
-    />
-  </RegisterStack.Navigator>
-
-);
 
 
 export default function App() {
@@ -79,11 +33,12 @@ export default function App() {
   }, [])
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
-        <Drawer.Screen name="Login" component={LoginStackScreen} />
+      <RootStackScreen />
+      {/* <Drawer.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+        <Drawer.Screen name="Login" component={MainTabScreen} />
         <Drawer.Screen name="Register" component={RegisterStackScreen} />
-        <Drawer.Screen name="Courses" component={Courses} />
-      </Drawer.Navigator>
+        <Drawer.Screen name="Courses" component={Courses} /> 
+      </Drawer.Navigator> */}
     </NavigationContainer>
   );
 }

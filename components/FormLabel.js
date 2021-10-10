@@ -1,9 +1,19 @@
 import React from 'react'
-import { Text } from 'react-native'
+import { Text, StyleSheet } from 'react-native'
 import tw from 'tailwind-react-native-classnames'
 
 export default function FormLabel({ text }) {
     return (
-        <Text style={tw`text-lg font-semibold mb-2`}>{text}</Text>
+        <Text style={styles.text_footer}>{text}</Text>
     )
 }
+
+const styles = StyleSheet.create({
+    text_footer: {
+        color: '#05375a',
+        fontSize: 18
+    },
+
+
+});
+
