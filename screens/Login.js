@@ -11,9 +11,6 @@ import {
     ScrollView,
     StatusBar
 } from 'react-native'
-import Title from '../components/Title'
-import Form from '../components/Form'
-import tw from 'tailwind-react-native-classnames'
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Animatable from 'react-native-animatable';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -21,6 +18,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons/Feather'
 
 import firebase from 'firebase'
+
+import { AuthContext } from './../components/context';
 
 export default function Login({ navigation }) {
 
@@ -31,6 +30,8 @@ export default function Login({ navigation }) {
         check_textInputChange: false,
         secureTextEntry: true,
     });
+
+    const { signIn } = React.useContext(AuthContext);
 
     const textInputChange = (val) => {
         if (val.length !== 0) {
@@ -62,16 +63,17 @@ export default function Login({ navigation }) {
         });
     }
 
-    const login = () => {
-        if (!data.email || !data.password) {
-            alert("Please enter all the required fields")
+    const loginHandler = (email, password) => {
+        if (!email || !password) {
+            //     alert("Please enter all the required fields")
         } else {
+            signIn(email, password)
 
-            firebase.auth().signInWithEmailAndPassword(data.email, data.password)
-                .then(user => {
-                    alert(`User logged in successfully, ${user.user.uid}`)
-                    navigation.navigate('Courses')
-                }).catch(err => alert(err.message))
+            // firebase.auth().signInWithEmailAndPassword(data.email, data.password)
+            //     .then(user => {
+            //         alert(`User logged in successfully, ${user.user.uid}`)
+            //         navigation.navigate('Courses')
+            //     }).catch(err => alert(err.message))
         }
     }
 
@@ -82,7 +84,7 @@ export default function Login({ navigation }) {
 
             {/* header */}
             <View style={styles.header}>
-                <Text style={styles.text_header}>Welcome!</Text>
+                <Text style={styles.text_header}>Welcome Back!</Text>
             </View>
 
             {/* footer */}
@@ -91,7 +93,6 @@ export default function Login({ navigation }) {
                 style={styles.footer}
             >
 
-                <Text style={styles.text_footer}>Email</Text>
                 <View style={styles.action}>
                     <FontAwesome
                         name="user-o"
@@ -99,7 +100,7 @@ export default function Login({ navigation }) {
                         size={20}
                     />
                     <TextInput
-                        placeholder="Your Email"
+                        placeholder="Email"
                         style={styles.textInput}
                         autoCapitalize="none"
                         onChangeText={(val) => textInputChange(val)}
@@ -118,10 +119,9 @@ export default function Login({ navigation }) {
                 </View>
 
                 {/* password */}
-                <Text style={[styles.text_footer, {
+                <View style={[styles.action, {
                     marginTop: 35
-                }]}>Password</Text>
-                <View style={styles.action}>
+                }]}>
                     <Feather
                         name="lock"
                         color="#05375a"
@@ -155,29 +155,26 @@ export default function Login({ navigation }) {
                 <View style={styles.button}>
                     <TouchableOpacity
                         style={styles.signIn}
-                        onPress={login}
+                        onPress={loginHandler(data.email, data.password)}
                     >
-                        <LinearGradient
-                            colors={['#08d4c4', '#01ab9d']}
-                            style={styles.signIn}
-                        >
-                            <Text style={[styles.textSign, {
-                                color: '#fff'
-                            }]}>Login</Text>
-                        </LinearGradient>
+                        <Text style={[styles.textSign, {
+                            color: '#fff'
+                        }]}>Login</Text>
+
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         onPress={() => navigation.navigate('Register')}
                         style={[styles.signIn, {
-                            borderColor: '#009387',
+                            borderColor: '#05375a',
+                            backgroundColor: '#fff',
                             borderWidth: 1,
                             marginTop: 15
                         }]}
                     >
 
                         <Text style={[styles.textSign, {
-                            color: '#009387'
+                            color: '#05375a'
                         }]}>Register</Text>
                     </TouchableOpacity>
                 </View>
@@ -189,7 +186,7 @@ export default function Login({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#05676B',
+        backgroundColor: '#689454',
     },
     header: {
         flex: 1,
@@ -200,8 +197,8 @@ const styles = StyleSheet.create({
     footer: {
         flex: Platform.OS === 'ios' ? 3 : 5,
         backgroundColor: '#fff',
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
         paddingHorizontal: 20,
         paddingVertical: 30
     },
@@ -236,7 +233,8 @@ const styles = StyleSheet.create({
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 10
+        borderRadius: 10,
+        backgroundColor: '#05375a'
     },
     textSign: {
         fontSize: 18,

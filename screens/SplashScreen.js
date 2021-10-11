@@ -19,26 +19,30 @@ export default function SplashScreen({ navigation }) {
             <View style={styles.header}>
                 <Animatable.Image
                     animation="bounceIn"
-                    duration="1500"
+                    duraton="1500"
                     source={require('../assets/logo.png')}
-                    style={{ width: 159, height: 159 }} />
-            </View>
-            <Animatable.View style={styles.footer}
-                animation="fadeInUpBig">
-                <Text style={styles.title}>Stay Connected with evryone</Text>
-                <Text style={styles.text}>Sign in with account</Text>
+                    style={styles.logo}
+                    resizeMode="stretch"
+                />
+
+                <Text style={styles.title}>Best way learn and contribute online</Text>
+                <Text style={styles.text}>Join our global community. It's free.</Text>
                 <View style={styles.button}>
                     <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                         <LinearGradient
                             // Button Linear Gradient
-                            colors={['#4c669f', '#3b5998', '#192f6a']}
+                            colors={['#2478B4', '#196396', '#05375a']}
                             style={styles.signIn}>
                             <Text style={styles.textSign}>Get Started</Text>
 
                         </LinearGradient>
                     </TouchableOpacity>
                 </View>
-            </Animatable.View>
+            </View>
+
+
+
+
         </View>
     );
 }
@@ -49,7 +53,7 @@ const height_logo = height * 0.28;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#009387'
+        backgroundColor: '#689454'
     },
     header: {
         flex: 2,
@@ -59,8 +63,8 @@ const styles = StyleSheet.create({
     footer: {
         flex: 1,
         backgroundColor: '#fff',
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
         paddingVertical: 50,
         paddingHorizontal: 30
     },
@@ -71,10 +75,12 @@ const styles = StyleSheet.create({
     title: {
         color: '#05375a',
         fontSize: 30,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginTop: 20
     },
     text: {
-        color: 'grey',
+        color: '#fff',
         marginTop: 5
     },
     button: {
@@ -86,7 +92,7 @@ const styles = StyleSheet.create({
         height: 40,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 50,
+        borderRadius: 20,
         flexDirection: 'row'
     },
     textSign: {

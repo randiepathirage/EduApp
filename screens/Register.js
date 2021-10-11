@@ -91,7 +91,7 @@ export default function Register({ navigation }) {
 
             {/* header */}
             <View style={styles.header}>
-                <Text style={styles.text_header}>Register Now!</Text>
+                <Text style={styles.text_header}>Create New Account</Text>
             </View>
 
             {/* footer */}
@@ -100,7 +100,6 @@ export default function Register({ navigation }) {
                 style={styles.footer}
             >
                 <ScrollView>
-                    <Text style={styles.text_footer}>Email</Text>
                     <View style={styles.action}>
                         <FontAwesome
                             name="user-o"
@@ -108,7 +107,7 @@ export default function Register({ navigation }) {
                             size={20}
                         />
                         <TextInput
-                            placeholder="Your Email"
+                            placeholder="Email"
                             style={styles.textInput}
                             autoCapitalize="none"
                             onChangeText={(val) => textInputChange(val)}
@@ -127,17 +126,16 @@ export default function Register({ navigation }) {
                     </View>
 
                     {/* password */}
-                    <Text style={[styles.text_footer, {
+                    <View style={[styles.action, {
                         marginTop: 35
-                    }]}>Password</Text>
-                    <View style={styles.action}>
+                    }]}>
                         <Feather
                             name="lock"
                             color="#05375a"
                             size={20}
                         />
                         <TextInput
-                            placeholder="Your Password"
+                            placeholder="Password"
                             secureTextEntry={data.secureTextEntry ? true : false}
                             style={styles.textInput}
                             autoCapitalize="none"
@@ -162,17 +160,16 @@ export default function Register({ navigation }) {
                         </TouchableOpacity>
                     </View>
 
-                    <Text style={[styles.text_footer, {
+                    <View style={[styles.action, {
                         marginTop: 35
-                    }]}>Confirm Password</Text>
-                    <View style={styles.action}>
+                    }]}>
                         <Feather
                             name="lock"
                             color="#05375a"
                             size={20}
                         />
                         <TextInput
-                            placeholder="Confirm Your Password"
+                            placeholder="Confirm Password"
                             secureTextEntry={data.confirm_secureTextEntry ? true : false}
                             style={styles.textInput}
                             autoCapitalize="none"
@@ -201,26 +198,23 @@ export default function Register({ navigation }) {
                             style={styles.signIn}
                             onPress={register}
                         >
-                            <LinearGradient
-                                colors={['#08d4c4', '#01ab9d']}
-                                style={styles.signIn}
-                            >
-                                <Text style={[styles.textSign, {
-                                    color: '#fff'
-                                }]}>Register</Text>
-                            </LinearGradient>
+                            <Text style={[styles.textSign, {
+                                color: '#fff'
+                            }]}>Register</Text>
+
                         </TouchableOpacity>
 
                         <TouchableOpacity
                             onPress={() => navigation.navigate('Login')}
                             style={[styles.signIn, {
-                                borderColor: '#009387',
+                                borderColor: '#05375a',
+                                backgroundColor: '#fff',
                                 borderWidth: 1,
                                 marginTop: 15
                             }]}
                         >
                             <Text style={[styles.textSign, {
-                                color: '#009387'
+                                color: '#05375a'
                             }]}>Login</Text>
                         </TouchableOpacity>
                     </View>
@@ -233,7 +227,7 @@ export default function Register({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#05676B',
+        backgroundColor: '#689454',
     },
     header: {
         flex: 1,
@@ -244,15 +238,15 @@ const styles = StyleSheet.create({
     footer: {
         flex: Platform.OS === 'ios' ? 3 : 5,
         backgroundColor: '#fff',
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
         paddingHorizontal: 20,
         paddingVertical: 30
     },
     text_header: {
         color: '#fff',
         fontWeight: 'bold',
-        fontSize: 30
+        fontSize: 25
     },
     text_footer: {
         color: '#05375a',
@@ -280,7 +274,8 @@ const styles = StyleSheet.create({
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 10
+        borderRadius: 10,
+        backgroundColor: '#05375a'
     },
     textSign: {
         fontSize: 18,
