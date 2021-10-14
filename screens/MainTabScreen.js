@@ -7,8 +7,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import Subcriptions from './Subcriptions';
 import Contributions from './Contributions';
-import Courses from './Courses';
+import Explore from './Explore';
 import Login from './Login';
+import Profile from './Profile';
 
 const HomeStack = createStackNavigator();
 const LoginStack = createStackNavigator();
@@ -25,9 +26,9 @@ const MainTabScreen = () => (
             component={Subcriptions}
             options={{
                 tabBarLabel: 'Subcriptions',
-                tabBarColor: '#009387',
+                tabBarColor: '#689454',
                 tabBarIcon: ({ color }) => (
-                    <Icon name="ios-home" color={color} size={26} />
+                    <Icon name="ios-star" color={color} size={24} />
                 ),
             }}
         />
@@ -36,32 +37,32 @@ const MainTabScreen = () => (
             component={Contributions}
             options={{
                 tabBarLabel: 'Contributions',
-                tabBarColor: '#1f65ff',
+                tabBarColor: '#05375a',
                 tabBarIcon: ({ color }) => (
-                    <Icon name="ios-notifications" color={color} size={26} />
+                    <Icon name="ios-code" color={color} size={24} />
                 ),
             }}
         />
         <Tab.Screen
-            name="Courses"
-            component={Courses}
+            name="Explore"
+            component={Explore}
             options={{
-                tabBarLabel: 'Courses',
-                tabBarColor: '#694fad',
+                tabBarLabel: 'Explore',
+                tabBarColor: '#689454',
                 tabBarIcon: ({ color }) => (
-                    <Icon name="ios-person" color={color} size={26} />
+                    <Icon name="ios-search" color={color} size={24} />
                 ),
             }}
         />
 
         <Tab.Screen
-            name="Home"
-            component={LoginStackScreen}
+            name="Profile"
+            component={Profile}
             options={{
-                tabBarLabel: 'Home',
-                tabBarColor: '#694fad',
+                tabBarLabel: 'Profile',
+                tabBarColor: '#05375a',
                 tabBarIcon: ({ color }) => (
-                    <Icon name="ios-person" color={color} size={26} />
+                    <Icon name="ios-person" color={color} size={24} />
                 ),
             }}
         />

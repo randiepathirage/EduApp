@@ -6,7 +6,7 @@ import CategoryCard from '../components/CategoryCard';
 
 const Tab = createBottomTabNavigator();
 
-const data = [
+const data1 = [
     {
         id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
         title: 'First Item',
@@ -25,19 +25,35 @@ const data = [
     },
 ];
 
-export default function Subcriptions() {
+const Explore = props => {
     return (
         <SafeAreaView style={styles.container}>
             <FlatList
-                data={data}
-                renderItem={({ item }) => (<CategoryCard categoryCard={item} />)}
-                keyExtractor={item => item.id}
+                numColumns={2}
+                data={data1}
+                renderItem={itemdata => (
+                    <CategoryCard
+                        id={itemdata.item.id}
+                        title={itemdata.item.title}
+                        category={itemdata.item.category}
+                        onViewDetail={() => {
+                            props.navigation.navigate('Courses');
+                            // , {
+                            // product: itemData.item,
+                            // productId: idList[itemData.index],
+                            //  });
+                            console.log('Hello');
+                        }}
+                    />
+                )}
             />
 
         </SafeAreaView>
 
     );
 }
+
+export default Explore;
 
 const styles = StyleSheet.create({
     container: {

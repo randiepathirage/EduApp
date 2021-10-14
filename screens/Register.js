@@ -87,7 +87,7 @@ export default function Register({ navigation }) {
     return (
 
         <View style={styles.container}>
-            <StatusBar backgroundColor='#009387' barStyle="light-content" />
+            <StatusBar backgroundColor='#689454' barStyle="light-content" />
 
             {/* header */}
             <View style={styles.header}>

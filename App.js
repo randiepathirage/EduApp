@@ -3,24 +3,19 @@ import React, { useEffect } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import {
-  View,
-  ActivityIndicator
-} from 'react-native'
+import { View, ActivityIndicator } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import RootStackScreen from './screens/RootStackScreen';
 import MainTabScreen from './screens/MainTabScreen';
-import Courses from './screens/Courses';
+import Explore from './screens/Explore';
 
 import firebase from 'firebase';
 import { config } from './firebaseconfig';
+
 import { AuthContext } from './components/context';
 
-const LoginStack = createNativeStackNavigator();
-const RegisterStack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
-
-
 
 export default function App() {
 
@@ -134,20 +129,18 @@ export default function App() {
   }
 
   return (
-    // <PaperProvider theme={theme}>
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
         {loginState.userToken !== null ? (
           <Drawer.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
             <Drawer.Screen name="Login" component={MainTabScreen} />
-            <Drawer.Screen name="Courses" component={Courses} />
+            <Drawer.Screen name="Explore" component={Explore} />
           </Drawer.Navigator>
         ) :
           <RootStackScreen />
         }
       </NavigationContainer>
     </AuthContext.Provider>
-    // </PaperProvider>
   );
 }
 

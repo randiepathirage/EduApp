@@ -65,14 +65,14 @@ export default function Login({ navigation }) {
 
     const loginHandler = (email, password) => {
         if (!email || !password) {
-            //     alert("Please enter all the required fields")
+            alert("Please enter all the required fields")
         } else {
             signIn(email, password)
 
             // firebase.auth().signInWithEmailAndPassword(data.email, data.password)
             //     .then(user => {
             //         alert(`User logged in successfully, ${user.user.uid}`)
-            //         navigation.navigate('Courses')
+            //         navigation.navigate('Explore')
             //     }).catch(err => alert(err.message))
         }
     }
@@ -80,7 +80,7 @@ export default function Login({ navigation }) {
     return (
 
         <View style={styles.container}>
-            <StatusBar backgroundColor='#009387' barStyle="light-content" />
+            <StatusBar backgroundColor='#689454' barStyle="light-content" />
 
             {/* header */}
             <View style={styles.header}>
