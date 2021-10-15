@@ -1,5 +1,6 @@
 import React, { createContext, useState } from 'react';
 import { firebase } from './../firebaseconfig';
+import Demo from './../screens/Demo'
 
 export const AuthContext = createContext();
 
@@ -19,7 +20,24 @@ export const AuthProvider = ({ children }) => {
                 },
                 register: async (email, password) => {
                     try {
-                        await firebase.auth().createUserWithEmailAndPassword(email, password);
+                        await firebase.auth().createUserWithEmailAndPassword(email, password)
+                            .then((response) => {
+                                const uid = response.user.uid;
+                                const data = {
+                                    id: uid,
+                                    email,
+                                };
+                                const usersRef = firebase.firestore().collection('users');
+                                usersRef
+                                    .doc(uid)
+                                    .set(data)
+                                    .then(() => {
+                                        navigation.navigate('Demo', { user: data });
+                                    })
+                                    .catch((error) => {
+                                        alert(error);
+                                    });
+                            })
                     } catch (e) {
                         console.log(e);
                     }

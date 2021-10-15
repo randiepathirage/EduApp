@@ -12,7 +12,7 @@ import AppStack from './navigation/AppStack';
 
 export default function App() {
 
-  // const { user, setUser } = useContext(AuthContext);
+  //const { user, setUser } = useContext(AuthContext);
   // const [initializing, setInitializing] = useState(true);
 
   // const onAuthStateChanged = (user) => {
@@ -31,7 +31,8 @@ export default function App() {
   return (
     <AuthProvider>
       <NavigationContainer>
-        <AuthStack />
+        {/* <AuthStack /> */}
+        <AppStack />
         {/* {user ? <Demo /> : <AuthStack />} */}
       </NavigationContainer>
     </AuthProvider>

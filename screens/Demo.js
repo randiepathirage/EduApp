@@ -1,10 +1,15 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Button } from 'react-native-paper';
+import { AuthContext } from '../navigation/AuthProvider';
 
 const Demo = () => {
     return (
         <View>
-            <Text> Courses</Text>
+            <Text> welcome</Text>
+            <Button onPress={() => logout()}>
+                Logout
+            </Button>
         </View>
     );
 };
