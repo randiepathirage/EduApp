@@ -3,6 +3,7 @@ import {
     View,
     Text,
     Button,
+    Image,
     TouchableOpacity,
     Dimensions,
     TextInput,
@@ -31,7 +32,7 @@ export default function Login({ navigation }) {
         secureTextEntry: true,
     });
 
-    const { signIn } = React.useContext(AuthContext);
+    //const { signIn } = React.useContext(AuthContext);
 
     const textInputChange = (val) => {
         if (val.length !== 0) {
@@ -65,7 +66,7 @@ export default function Login({ navigation }) {
 
     const loginHandler = (email, password) => {
         if (!email || !password) {
-            alert("Please enter all the required fields")
+            //  alert("Please enter all the required fields")
         } else {
             signIn(email, password)
 
@@ -82,6 +83,14 @@ export default function Login({ navigation }) {
         <View style={styles.container}>
             <StatusBar backgroundColor='#689454' barStyle="light-content" />
 
+            <Animatable.Image
+                animation="bounceIn"
+                duraton="1500"
+                source={require('../assets/logo.png')}
+                style={styles.logo}
+                resizeMode="stretch"
+            />
+
             {/* header */}
             <View style={styles.header}>
                 <Text style={styles.text_header}>Welcome Back!</Text>
@@ -92,7 +101,6 @@ export default function Login({ navigation }) {
                 animation="fadeInUpBig"
                 style={styles.footer}
             >
-
                 <View style={styles.action}>
                     <FontAwesome
                         name="user-o"
@@ -128,7 +136,7 @@ export default function Login({ navigation }) {
                         size={20}
                     />
                     <TextInput
-                        placeholder="Your Password"
+                        placeholder="Password"
                         secureTextEntry={data.secureTextEntry ? true : false}
                         style={styles.textInput}
                         autoCapitalize="none"
@@ -151,7 +159,11 @@ export default function Login({ navigation }) {
                             />
                         }
                     </TouchableOpacity>
+
                 </View>
+                <TouchableOpacity onPress={() => { }}>
+                    <Text style={styles.forgotButton}>Forgot Password?</Text>
+                </TouchableOpacity>
                 <View style={styles.button}>
                     <TouchableOpacity
                         style={styles.signIn}
@@ -183,6 +195,10 @@ export default function Login({ navigation }) {
     )
 }
 
+
+const { height } = Dimensions.get("screen");
+const height_logo = height * 0.20;
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -205,7 +221,8 @@ const styles = StyleSheet.create({
     text_header: {
         color: '#fff',
         fontWeight: 'bold',
-        fontSize: 30
+        fontSize: 30,
+        alignSelf: 'center'
     },
     text_footer: {
         color: '#05375a',
@@ -247,6 +264,18 @@ const styles = StyleSheet.create({
     },
     color_textPrivate: {
         color: 'grey'
+    },
+    logo: {
+        width: height_logo,
+        height: height_logo,
+        alignSelf: 'center',
+        marginTop: 20
+
+    },
+    forgotButton: {
+        marginTop: 2,
+        color: '#05375a',
+        alignSelf: 'flex-end'
     }
 });
 

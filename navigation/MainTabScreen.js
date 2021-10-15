@@ -5,14 +5,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import Subcriptions from './Subcriptions';
-import Contributions from './Contributions';
-import Explore from './Explore';
-import Login from './Login';
-import Profile from './Profile';
-
-const HomeStack = createStackNavigator();
-const LoginStack = createStackNavigator();
+import Subcriptions from '../screens/Subcriptions';
+import Contributions from '../screens/Contributions';
+import Explore from '../screens/Explore';
+import Login from '../screens/Login';
+import Profile from '../screens/Profile';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -70,51 +67,3 @@ const MainTabScreen = () => (
 );
 
 export default MainTabScreen;
-
-const LoginStackScreen = ({ navigation }) => (
-
-    <LoginStack.Navigator
-        initialRouteName="login"
-        activeColor="#fff"
-    >
-        <LoginStack.Screen
-            name="login"
-            component={Login}
-            options={{
-                title: 'Login',
-                headerLeft: () => (
-                    <Icon.Button
-                        name="ios-menu"
-                        backgroundColor='#fff'
-                        size={26}
-                        onPress={() => navigation.openDrawer()}></Icon.Button>
-                )
-            }}
-        />
-    </LoginStack.Navigator>
-
-);
-
-const RegisterStackScreen = ({ navigation }) => (
-
-    <RegisterStack.Navigator
-        initialRouteName="detail"
-        activeColor="#fff"
-    >
-        <RegisterStack.Screen
-            name="detail"
-            component={Register}
-            options={{
-                title: 'Register',
-                headerLeft: () => (
-                    <Icon.Button
-                        name="ios-menu"
-                        backgroundColor='#fff'
-                        size={26}
-                        onPress={() => navigation.openDrawer()}></Icon.Button>
-                )
-            }}
-        />
-    </RegisterStack.Navigator>
-
-);

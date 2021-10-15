@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-const Courses = () => {
+const Demo = () => {
     return (
         <View>
             <Text> Courses</Text>
@@ -9,6 +9,5 @@ const Courses = () => {
     );
 };
 
-export default Courses;
-
+export default Demo;
 const styles = StyleSheet.create({});

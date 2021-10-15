@@ -30,7 +30,9 @@
     "react-native-screens": "~3.4.0",
     "react-native-vector-icons": "^8.1.0",
     "react-native-web": "~0.13.12",
-    "tailwind-react-native-classnames": "^1.5.1"
+    "tailwind-react-native-classnames": "^1.5.1",
+    "validator": "^13.6.0",
+    "undefined": "firebase/app"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"

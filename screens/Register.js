@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import {
     View,
     Text,
@@ -9,12 +9,12 @@ import {
     StyleSheet,
     StatusBar
 } from 'react-native'
-import { LinearGradient } from 'expo-linear-gradient';
+import { firebase } from './../firebaseconfig';
 import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons/Feather'
+import { AuthContext } from '../navigation/AuthProvider';
 
-import firebase from 'firebase'
 
 export default function Register({ navigation }) {
 
@@ -71,19 +71,21 @@ export default function Register({ navigation }) {
         });
     }
 
-    const register = () => {
-        if (!data.email || !data.password) {
-            alert("Please enter all the required fields")
-        } else {
-            firebase.auth().
-                createUserWithEmailAndPassword(data.email, data.password)
-                .then(user => {
-                    //alert("hareeeeee")
-                    navigation.navigate('Login')
+    // const register = () => {
+    //     if (!data.email || !data.password) {
+    //         alert("Please enter all the required fields")
+    //     } else {
+    //         firebase.auth().
+    //             createUserWithEmailAndPassword(data.email, data.password)
+    //             .then(user => {
+    //                 //alert("hareeeeee")
+    //                 navigation.navigate('Login')
 
-                }).catch(err => alert(err.message))
-        }
-    }
+    //             }).catch(err => alert(err.message))
+    //     }
+    // }
+
+    const { register } = useContext(AuthContext)
     return (
 
         <View style={styles.container}>
@@ -196,7 +198,7 @@ export default function Register({ navigation }) {
                     <View style={styles.button}>
                         <TouchableOpacity
                             style={styles.signIn}
-                            onPress={register}
+                            onPress={register(data.email, data.password)}
                         >
                             <Text style={[styles.textSign, {
                                 color: '#fff'
