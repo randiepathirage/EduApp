@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import {
     View,
     Text,
@@ -20,10 +20,9 @@ import Feather from 'react-native-vector-icons/Feather'
 
 import firebase from 'firebase'
 
-import { AuthContext } from './../components/context';
+import { AuthContext } from './../navigation/AuthProvider';
 
 export default function Login({ navigation }) {
-
 
     const [data, setData] = React.useState({
         email: '',
@@ -64,19 +63,20 @@ export default function Login({ navigation }) {
         });
     }
 
-    const loginHandler = (email, password) => {
-        if (!email || !password) {
-            //  alert("Please enter all the required fields")
-        } else {
-            signIn(email, password)
+    // const loginHandler = (email, password) => {
+    //     if (!email || !password) {
+    //         //  alert("Please enter all the required fields")
+    //     } else {
+    //         signIn(email, password)
 
-            // firebase.auth().signInWithEmailAndPassword(data.email, data.password)
-            //     .then(user => {
-            //         alert(`User logged in successfully, ${user.user.uid}`)
-            //         navigation.navigate('Explore')
-            //     }).catch(err => alert(err.message))
-        }
-    }
+    //         // firebase.auth().signInWithEmailAndPassword(data.email, data.password)
+    //         //     .then(user => {
+    //         //         alert(`User logged in successfully, ${user.user.uid}`)
+    //         //         navigation.navigate('Explore')
+    //         //     }).catch(err => alert(err.message))
+    //     }
+    // }
+    const { login } = useContext(AuthContext);
 
     return (
 
@@ -167,7 +167,7 @@ export default function Login({ navigation }) {
                 <View style={styles.button}>
                     <TouchableOpacity
                         style={styles.signIn}
-                        onPress={loginHandler(data.email, data.password)}
+                        onPress={login(data.email, data.password)}
                     >
                         <Text style={[styles.textSign, {
                             color: '#fff'

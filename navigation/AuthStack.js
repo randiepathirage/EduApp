@@ -1,12 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { View } from 'react-native'
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Register from '../screens/Register';
 import Login from '../screens/Login';
 import SplashScreen from '../screens/SplashScreen';
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import MainTabScreen from './MainTabScreen';
 
 const Stack = createStackNavigator();
 
@@ -52,25 +48,8 @@ const AuthStack = () => {
                 component={Register}
                 options={{ header: () => null }}
             />
-            <Stack.Screen
-                name="HomePageScreen"
-                component={MainTabScreen}
-                options={{ headerBackVisible: false }}
-            />
+
         </Stack.Navigator>
-        // <AuthContext.Provider value={authContext}>
-        //   <MainNavigation/>
-        //   <NavigationContainer>
-        //     {loginState.userToken !== null ? (
-        //       <Drawer.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
-        //         <Drawer.Screen name="Login" component={MainTabScreen} />
-        //         <Drawer.Screen name="Explore" component={Explore} />
-        //       </Drawer.Navigator>
-        //     ) :
-        //       <RootStackScreen />
-        //     }
-        //   </NavigationContainer>
-        // </AuthContext.Provider>
     );
 }
 
