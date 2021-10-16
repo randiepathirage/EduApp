@@ -1,28 +1,39 @@
 import React, { useState } from 'react'
 import { firebase } from './../firebaseconfig';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export default function AddContribution(props) {
     const [contriTitle, setContriTitle] = useState('');
-    const [contributions, setContributions] = useState([]);
+    const [contriCat, setContriCat] = useState('');
+    const [content, setContent] = useState('');
 
-    const contributionRef = firebase.firestore().collection('contributions');
+    const articleRef = firebase.firestore().collection('Articles');
 
-    //const userID = props.extraData.id;
+    const [token, setToken] = useState('');
+    AsyncStorage.getItem('userToken')
+        .then((value) => {
+            setToken(value);
+        })
 
     const onAddNewPress = () => {
-        if (contriTitle && contriTitle.length > 0) {
+        if (contriCat.length > 0 && contriTitle.length > 0 && content.length > 0) {
             const timestamp = firebase.firestore.FieldValue.serverTimestamp();
             const data = {
-                text: entityText,
-                authorID: userID,
+                title: contriTitle,
+                category: contriCat,
+                content: content,
+                authorID: token,
                 createdAt: timestamp,
             };
-            entityRef
+            articleRef
                 .add(data)
                 .then((_doc) => {
-                    setEntityText('');
-                    Keyboard.dismiss();
+                    setContriTitle('');
+                    setContriCat('');
+                    setContent('');
+                    props.navigation.navigate('Contributions')
                 })
                 .catch((error) => {
                     alert(error);
@@ -30,16 +41,28 @@ export default function AddContribution(props) {
         }
     };
 
+    const onBackPress = () => {
+        props.navigation.navigate('Contributions')
+    }
+
     return (
         <SafeAreaView>
-            <Text style={styles.title}>New Atricle</Text>
+            <View style={styles.container}>
+                <Icon style={styles.icons}
+                    name="ios-chevron-back"
+                    color='#05375a'
+                    size={24}
+                    onPress={onBackPress}
+                />
+                <Text style={styles.title}>New Atricle</Text>
+            </View>
             <View style={styles.formContainer}>
                 <TextInput
                     style={styles.titleInput}
                     placeholder='Select Category'
                     placeholderTextColor='#aaaaaa'
-                    //onChangeText={(text) => setContriTitle(text)}
-                    //value={contriTitle}
+                    onChangeText={(text) => setContriCat(text)}
+                    value={contriCat}
                     underlineColorAndroid='transparent'
                     autoCapitalize='none'
                 />
@@ -47,8 +70,8 @@ export default function AddContribution(props) {
                     style={styles.titleInput}
                     placeholder='Article Title'
                     placeholderTextColor='#aaaaaa'
-                    //onChangeText={(text) => setContriTitle(text)}
-                    //value={contriTitle}
+                    onChangeText={(text) => setContriTitle(text)}
+                    value={contriTitle}
                     underlineColorAndroid='transparent'
                     autoCapitalize='none'
                 />
@@ -57,8 +80,8 @@ export default function AddContribution(props) {
                     style={styles.input}
                     placeholder='Write Content'
                     placeholderTextColor='#aaaaaa'
-                    onChangeText={(text) => setContriTitle(text)}
-                    value={contriTitle}
+                    onChangeText={(text) => setContent(text)}
+                    value={content}
                     underlineColorAndroid='transparent'
                     autoCapitalize='none'
                 />
@@ -69,11 +92,6 @@ export default function AddContribution(props) {
                     <Text style={styles.buttonText}>Add New</Text>
                 </TouchableOpacity>
             </View>
-            {/* {entities && (
-                    <View style={styles.listContainer}>
-                        <FlatList data={entities} renderItem={renderEntity} keyExtractor={(item) => item.id} removeClippedSubviews={true} />
-                    </View>
-                )} */}
 
         </SafeAreaView>
     )
@@ -81,7 +99,7 @@ export default function AddContribution(props) {
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: 'center'
+        flexDirection: 'row',
     },
     item: {
         backgroundColor: '#f9c2ff',
@@ -92,10 +110,13 @@ const styles = StyleSheet.create({
     title: {
         alignSelf: 'flex-start',
         marginTop: 20,
-        marginHorizontal: 10,
         fontSize: 23,
         color: '#05375a',
         fontWeight: 'bold'
+    },
+    icons: {
+        marginTop: 25,
+        marginHorizontal: 10,
     },
     formContainer: {
         marginTop: 10,
