@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Subcriptions from '../screens/Subcriptions';
-import Contributions from '../screens/Contributions';
+import ContributionsStack from '../navigation/ContributionsStack';
 import ExploreStack from '../navigation/ExploreStack';
 import Profile from '../screens/Profile';
 
@@ -31,7 +31,7 @@ const AppStack = () => {
             />
             <Tab.Screen
                 name="Contributions"
-                component={Contributions}
+                component={ContributionsStack}
                 options={{
                     tabBarLabel: 'Contributions',
                     tabBarColor: '#05375a',

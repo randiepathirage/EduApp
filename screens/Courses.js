@@ -24,7 +24,7 @@ const data1 = [
     },
 ];
 
-const Courses = () => {
+const Courses = props => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.formContainer}>

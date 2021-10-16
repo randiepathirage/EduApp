@@ -25,7 +25,7 @@ const data = [
     },
 ];
 
-export default function Subcriptions() {
+export default function Subcriptions(props) {
     return (
         <SafeAreaView style={styles.container}>
             <FlatList

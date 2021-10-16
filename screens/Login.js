@@ -14,11 +14,12 @@ import {
 import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons/Feather'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import firebase from 'firebase'
 
 
-export default function Login({ navigation }) {
+export default function Login(props) {
 
     const [data, setData] = React.useState({
         email: '',
@@ -81,6 +82,10 @@ export default function Login({ navigation }) {
             await firebase.auth().signInWithEmailAndPassword(email, password)
                 .then((response) => {
                     const uid = response.user.uid;
+
+                    //adding to async storage 
+                    AsyncStorage.setItem('userToken', uid)
+                    AsyncStorage.setItem('email', email)
                     const usersRef = firebase.firestore().collection('users');
                     usersRef
                         .doc(uid)
@@ -92,7 +97,8 @@ export default function Login({ navigation }) {
                             }
                             const user = firestoreDocument.data();
                             //navigation.replace('Demo', { user: user });
-                            navigation.navigate('Home');
+                            console.log(user)
+                            props.navigation.replace('Home', { user: user });
                         })
                         .catch((error) => {
                             alert(error);
