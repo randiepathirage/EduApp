@@ -85,7 +85,36 @@ export default function Register({ navigation }) {
     //     }
     // }
 
-    const { register } = useContext(AuthContext)
+    const register = async (email) => {
+        if (data.password == data.confirm_password) {
+            try {
+                await firebase.auth().createUserWithEmailAndPassword(email, data.password)
+                    .then((response) => {
+                        const uid = response.user.uid;
+                        const data = {
+                            id: uid,
+                            email,
+                        };
+                        const usersRef = firebase.firestore().collection('users');
+                        usersRef
+                            .doc(uid)
+                            .set(data)
+                            .then(() => {
+                                navigation.navigate('Login', { user: data });
+                            })
+                            .catch((error) => {
+                                alert(error);
+                            });
+                    })
+            } catch (e) {
+                console.log(e);
+            }
+        } else {
+            alert("Password doesn't match")
+        }
+
+    }
+
     return (
 
         <View style={styles.container}>
@@ -198,7 +227,7 @@ export default function Register({ navigation }) {
                     <View style={styles.button}>
                         <TouchableOpacity
                             style={styles.signIn}
-                            onPress={register(data.email, data.password)}
+                            onPress={() => register(data.email)}
                         >
                             <Text style={[styles.textSign, {
                                 color: '#fff'

@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Register from '../screens/Register';
 import Login from '../screens/Login';
 import SplashScreen from '../screens/SplashScreen';
+import AppStack from './AppStack';
 
 const Stack = createStackNavigator();
 
@@ -46,6 +47,11 @@ const AuthStack = () => {
             <Stack.Screen
                 name="Register"
                 component={Register}
+                options={{ header: () => null }}
+            />
+            <Stack.Screen
+                name="Home"
+                component={AppStack}
                 options={{ header: () => null }}
             />
 
