@@ -9,18 +9,14 @@ import {
     TextInput,
     Platform,
     StyleSheet,
-    ScrollView,
     StatusBar
 } from 'react-native'
-import { LinearGradient } from 'expo-linear-gradient';
 import * as Animatable from 'react-native-animatable';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons/Feather'
 
 import firebase from 'firebase'
 
-import { AuthContext } from './../navigation/AuthProvider';
 
 export default function Login({ navigation }) {
 
@@ -76,7 +72,45 @@ export default function Login({ navigation }) {
     //         //     }).catch(err => alert(err.message))
     //     }
     // }
-    const { login } = useContext(AuthContext);
+
+    const login = async (email, password) => {
+        if (!email || !password) {
+            alert("Please enter all the required fields")
+        } else {
+
+            await firebase.auth().signInWithEmailAndPassword(email, password)
+                .then((response) => {
+                    const uid = response.user.uid;
+                    const usersRef = firebase.firestore().collection('users');
+                    usersRef
+                        .doc(uid)
+                        .get()
+                        .then((firestoreDocument) => {
+                            if (!firestoreDocument.exists) {
+                                alert('User does not exist anymore.');
+                                return;
+                            }
+                            const user = firestoreDocument.data();
+                            //navigation.replace('Demo', { user: user });
+                            navigation.navigate('Home');
+                        })
+                        .catch((error) => {
+                            alert(error);
+                        });
+                })
+                .catch((error) => {
+                    alert(error);
+                });
+
+
+
+
+
+
+
+        }
+    }
+
 
     return (
 
@@ -167,7 +201,7 @@ export default function Login({ navigation }) {
                 <View style={styles.button}>
                     <TouchableOpacity
                         style={styles.signIn}
-                        onPress={login(data.email, data.password)}
+                        onPress={() => login(data.email, data.password)}
                     >
                         <Text style={[styles.textSign, {
                             color: '#fff'

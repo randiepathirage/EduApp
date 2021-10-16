@@ -31,9 +31,9 @@ export default function App() {
   return (
     <AuthProvider>
       <NavigationContainer>
-        {/* <AuthStack /> */}
-        <AppStack />
-        {/* {user ? <Demo /> : <AuthStack />} */}
+        <AuthStack />
+        {/* <AppStack /> 
+        {/* {user ? <AppStack /> : <AuthStack />} */}
       </NavigationContainer>
     </AuthProvider>
   );

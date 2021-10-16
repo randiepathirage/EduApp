@@ -16,11 +16,14 @@ const CategoryCard = props => {
     return (
         <TouchableOpacity
             style={styles.card}
-            onPress={props.onViewDetail}
+            onPress={props.onViewCourses}
             key={props.id}>
-            <Image style={{ width: 159, height: 150 }} source={{ url: props.categoryImage }} />
-            <Text>{props.title}</Text>
-            <Text>{props.category}</Text>
+            <Image
+                style={styles.cardImage}
+                source={{ uri: props.categoryImage }}
+            //source={require(props.categoryImage)}
+            />
+            <Text style={styles.title}>{props.category}</Text>
         </TouchableOpacity>
     )
 
@@ -30,10 +33,21 @@ export default CategoryCard;
 
 const styles = StyleSheet.create({
     card: {
-        width: '49%',
         alignItems: 'center',
-        margin: '1%',
-        borderWidth: 0.75,
-        backgroundColor: 'grey'
+        margin: '3%',
+        backgroundColor: '#90BD7B',
+        borderRadius: 5
+    },
+    title: {
+        color: '#fff',
+        fontSize: 20,
+        fontWeight: '400',
+        marginBottom: 10,
+    },
+    cardImage: {
+        width: 135,
+        height: 115,
+        marginTop: 10,
+        margin: 10
     }
 });

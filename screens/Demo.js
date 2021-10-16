@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Button } from 'react-native-paper';
 import { AuthContext } from '../navigation/AuthProvider';
 
-const Demo = () => {
+const Demo = ({ navigation }) => {
     return (
         <View>
             <Text> welcome</Text>
