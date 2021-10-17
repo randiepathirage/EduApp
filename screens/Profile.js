@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Restart } from 'fiction-expo-restart';
@@ -18,10 +18,20 @@ const Profile = props => {
         })
     console.log(user.uid)
 
+    const [email, setEmail] = useState('');
+    AsyncStorage.getItem('email')
+        .then((value) => {
+            setEmail(value);
+        })
+
     return (
-        <SafeAreaView>
+        <SafeAreaView style={styles.container}>
             <Text style={styles.title}>Profile</Text>
-            <Text>{token}</Text>
+            <Image
+                source={require('../assets/avatar.png')}
+                style={styles.avatar} />
+            <Text style={styles.details}>USER ID: {token}</Text>
+            <Text style={styles.details}>EMAIL: {email}</Text>
             <TouchableOpacity
                 style={styles.button}
                 onPress={onLogout}
@@ -29,32 +39,34 @@ const Profile = props => {
                 <Text style={styles.buttonText}>Logout</Text>
             </TouchableOpacity>
 
-            {/* {entities && (
-                    <View style={styles.listContainer}>
-                        <FlatList data={entities} renderItem={renderEntity} keyExtractor={(item) => item.id} removeClippedSubviews={true} />
-                    </View>
-                )} */}
-
         </SafeAreaView>
     );
 };
 
 export default Profile;
 
+const { height } = Dimensions.get("screen");
+const height_logo = height * 0.30;
+
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center'
     },
-    item: {
-        backgroundColor: '#f9c2ff',
-        padding: 20,
-        marginVertical: 8,
-        marginHorizontal: 16,
+    avatar: {
+        width: height_logo,
+        height: height_logo,
+        alignSelf: 'center',
+        marginTop: 20
+
+    },
+    details: {
+        margin: 10,
+        color: '#05375a',
+        fontSize: 15,
+        fontWeight: 480
     },
     title: {
-        alignSelf: 'flex-start',
-        marginHorizontal: 10,
-        marginVertical: 10,
+        marginTop: 35,
         fontSize: 23,
         color: '#05375a',
         fontWeight: 'bold'
@@ -63,7 +75,6 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 10,
         marginLeft: 10,
-        alignSelf: 'flex-start',
         height: 30,
         borderRadius: 5,
         backgroundColor: '#05375a',

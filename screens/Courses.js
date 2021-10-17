@@ -1,32 +1,59 @@
-import React from 'react';
-import { View, Text, FlatList, SafeAreaView, StatusBar, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { firebase } from './../firebaseconfig';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import CourseCard from '../components/CourseCard';
-
-
-const data1 = [
-    {
-        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-        title: 'First Item',
-        categoryImage: '../assets/onboarding-img1.png',
-        category: 'science'
-    },
-    {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-        title: 'Second Item',
-        categoryImage: '../assets/logo.png',
-        category: 'art',
-
-    },
-    {
-        id: '58694a0f-3da1-471f-bd96-145571e29d72',
-        title: 'Third Item',
-        category: 'mathematics'
-    },
-];
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const Courses = props => {
+
+    const [articles, setArticles] = useState([]);
+    const [idList, setIdList] = useState([]);
+
+    const articleRef = firebase.firestore().collection('Articles');
+
+    const [token, setToken] = useState('');
+    AsyncStorage.getItem('userToken')
+        .then((value) => {
+            setToken(value);
+        })
+    console.log(token)
+
+    useEffect(() => {
+        articleRef
+            // .where('authorID', '=', token)
+            .onSnapshot(
+                querySnapshot => {
+                    const list = [];
+                    const idL = [];
+                    querySnapshot.forEach(documentSnapshot => {
+                        list.push(documentSnapshot.data());
+                        idL.push(documentSnapshot.id);
+                    });
+                    setArticles(list);
+                    setIdList(idL);
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
+    }, []);
+
+    const onBackPress = () => {
+        props.navigation.navigate('Explore')
+    }
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView>
+            <View style={styles.container}>
+                <Icon style={styles.icons}
+                    name="ios-chevron-back"
+                    color='#689454'
+                    size={24}
+                    onPress={onBackPress}
+                />
+                <Text style={styles.title}>Art</Text>
+            </View>
             <View style={styles.formContainer}>
                 <TextInput
                     style={styles.input}
@@ -44,30 +71,28 @@ const Courses = props => {
                     <Text style={styles.buttonText}>Search</Text>
                 </TouchableOpacity>
             </View>
-            {/* {entities && (
-                    <View style={styles.listContainer}>
-                        <FlatList data={entities} renderItem={renderEntity} keyExtractor={(item) => item.id} removeClippedSubviews={true} />
-                    </View>
-                )} */}
 
-
-            <FlatList
-                numColumns={2}
-                data={data1}
-                renderItem={itemdata => (
-                    <CourseCard
-                        id={itemdata.item.id}
-                        title={itemdata.item.title}
-                        category={itemdata.item.category}
-                        onViewCourses={() => {
-                            props.navigation.navigate('Courses', {
-                                category: itemdata.category
-                            });
-                            console.log('Hello');
-                        }}
+            {articles && (
+                <View>
+                    <FlatList
+                        data={articles}
+                        renderItem={itemdata => (
+                            <CourseCard
+                                id={itemdata.item.id}
+                                title={itemdata.item.title}
+                                category={itemdata.item.category}
+                                content={itemdata.item.content}
+                            // onViewCourses={() => {
+                            //     props.navigation.navigate('Courses', {
+                            //         category: itemdata.category
+                            //     });
+                            //     console.log('Hello');
+                            // }}
+                            />
+                        )}
                     />
-                )}
-            />
+                </View>
+            )}
 
         </SafeAreaView>
 
@@ -78,29 +103,29 @@ export default Courses;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        marginTop: StatusBar.currentHeight || 0,
-        alignItems: 'center'
+        flexDirection: 'row',
     },
-    item: {
-        backgroundColor: '#f9c2ff',
-        padding: 20,
-        marginVertical: 8,
-        marginHorizontal: 16,
+    icons: {
+        marginTop: 25,
+        marginHorizontal: 10,
     },
     title: {
-        fontSize: 32,
+        alignSelf: 'flex-start',
+        marginTop: 20,
+        fontSize: 23,
+        color: '#689454',
+        fontWeight: 'bold'
     },
     formContainer: {
         flexDirection: 'row',
         // height: 20,
-        marginTop: 20,
+        marginTop: 10,
         marginBottom: 10,
+        marginLeft: 10,
+        alignSelf: 'flex-start'
         //flex: 1,
         //paddingLeft: 10,
         //paddingRight: 10,
-        //justifyContent: 'center',
-        //alignItems: 'center'
     },
     input: {
         borderRadius: 5,
@@ -122,12 +147,4 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 14
     },
-    listContainer: {
-        marginTop: 20,
-        padding: 20,
-    },
-    entityText: {
-        fontSize: 20,
-        color: '#333333'
-    }
 });

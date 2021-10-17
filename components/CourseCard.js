@@ -5,25 +5,14 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 const CourseCard = props => {
 
-    // const handlePress = (id) => {
-    //     const pressedCategory = data.find(cat => {
-    //         return cat.id === id;
-    //     });
-    //     //console.log("sdsdsdsd")
-    //     //alert(pressedCategory.category)
-    //     navigation.navigate('Login')
-    // }
     return (
         <TouchableOpacity
             style={styles.card}
-            onPress={props.onViewCourses}
+            //onPress={props.onViewCourses}
             key={props.id}>
-            <Image
-                style={styles.cardImage}
-                source={{ uri: props.categoryImage }}
-            //source={require(props.categoryImage)}
-            />
-            <Text style={styles.title}>{props.category}</Text>
+
+            <Text style={styles.title}>{props.title}</Text>
+            <Text style={styles.category}> Category: {props.category}</Text>
         </TouchableOpacity>
     )
 
@@ -33,21 +22,22 @@ export default CourseCard;
 
 const styles = StyleSheet.create({
     card: {
-        alignItems: 'center',
-        margin: '3%',
+        marginHorizontal: '3%',
+        marginBottom: 10,
         backgroundColor: '#90BD7B',
-        borderRadius: 5
+        borderRadius: 5,
+        padding: 10
     },
     title: {
         color: '#fff',
-        fontSize: 20,
-        fontWeight: '400',
-        marginBottom: 10,
+        fontSize: 15,
+        fontWeight: '450',
+        marginBottom: 5,
     },
-    cardImage: {
-        width: 135,
-        height: 115,
-        marginTop: 10,
-        margin: 10
+    category: {
+        color: '#fff',
+        fontSize: 12,
+        fontWeight: '350',
+        marginBottom: 5,
     }
 });
