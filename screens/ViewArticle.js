@@ -11,7 +11,7 @@ const ViewArticle = ({ route, navigation }) => {
 
     const { arti, artiId } = route.params;
 
-    const articleRef = firebase.firestore().collection('Articles');
+    const favRef = firebase.firestore().collection('Favourites');
 
     const [token, setToken] = useState('');
     AsyncStorage.getItem('userToken')
@@ -25,28 +25,24 @@ const ViewArticle = ({ route, navigation }) => {
         setTitle(arti.title)
     }, []);
 
-    const onAddNewPress = () => {
-        if (contriCat.length > 0 && contriTitle.length > 0 && content.length > 0) {
-            const timestamp = firebase.firestore.FieldValue.serverTimestamp();
-            const data = {
-                title: contriTitle,
-                category: contriCat,
-                content: content,
-                authorID: token,
-                createdAt: timestamp,
-            };
-            articleRef
-                .add(data)
-                .then((_doc) => {
-                    setTitle('');
-                    setCat('');
-                    setContent('');
-                    navigation.navigate('Contributions')
-                })
-                .catch((error) => {
-                    alert(error);
-                });
-        }
+    const onAddFavPress = () => {
+        const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+        const data = {
+            title: title,
+            category: cat,
+            content: content,
+            userID: token,
+            createdAt: timestamp,
+        };
+        favRef
+            .add(data)
+            .then((_doc) => {
+                navigation.navigate('Explore')
+            })
+            .catch((error) => {
+                alert(error);
+            });
+
     };
 
     const onBackPress = () => {
@@ -69,7 +65,7 @@ const ViewArticle = ({ route, navigation }) => {
                 <Text style={styles.input}>{content}</Text>
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={onAddNewPress}
+                    onPress={onAddFavPress}
                 >
                     <Text style={styles.buttonText}>Add To Fav</Text>
                 </TouchableOpacity>

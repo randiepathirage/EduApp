@@ -26,7 +26,7 @@ const Courses = ({ route, navigation }) => {
     useEffect(() => {
         setCategory(articleCat.category)
         articleRef
-            .where('category', '==', 'Art')
+            // .where('category', '==', 'Art')
             .onSnapshot(
                 querySnapshot => {
                     const list = [];
