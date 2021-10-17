@@ -22,7 +22,7 @@ export default function Contributions(props) {
 
     useEffect(() => {
         articleRef
-            // .where('authorID', '=', token)
+            .where('authorID', '==', '1bIyPboPcrQOPqd5sgyO5w7I6vL2')
             .onSnapshot(
                 querySnapshot => {
                     const list = [];
@@ -66,12 +66,15 @@ export default function Contributions(props) {
                                 title={itemdata.item.title}
                                 category={itemdata.item.category}
                                 content={itemdata.item.content}
-                            // onViewCourses={() => {
-                            //     props.navigation.navigate('Courses', {
-                            //         category: itemdata.category
-                            //     });
-                            //     console.log('Hello');
-                            // }}
+                                onViewContribution={() => {
+                                    props.navigation.navigate('ViewContribution', {
+                                        //category: itemdata.item.category,
+                                        //    title: itemdata.item.title,
+                                        //   content: itemdata.item.content
+                                        arti: itemdata.item,
+                                        artiId: idList[itemdata.index],
+                                    });
+                                }}
                             />
                         )}
                     />
