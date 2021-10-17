@@ -216,7 +216,7 @@ export default function Login(props) {
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('Register')}
+                        onPress={() => props.navigation.navigate('Register')}
                         style={[styles.signIn, {
                             borderColor: '#05375a',
                             backgroundColor: '#fff',

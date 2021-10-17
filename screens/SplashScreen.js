@@ -20,12 +20,12 @@ export default function SplashScreen({ navigation }) {
                 <Animatable.Image
                     animation="bounceIn"
                     duraton="1500"
-                    source={require('../assets/logo.png')}
+                    source={require('../assets/onboarding-img1.png')}
                     style={styles.logo}
                     resizeMode="stretch"
                 />
 
-                <Text style={styles.title}>Best way learn and contribute online</Text>
+                <Text style={styles.title}>Best way read and contribute online</Text>
                 <Text style={styles.text}>Join our global community. It's free.</Text>
                 <View style={styles.button}>
                     <TouchableOpacity onPress={() => navigation.navigate('Login')}>
@@ -48,7 +48,7 @@ export default function SplashScreen({ navigation }) {
 }
 
 const { height } = Dimensions.get("screen");
-const height_logo = height * 0.28;
+const height_logo = height * 0.30;
 
 const styles = StyleSheet.create({
     container: {

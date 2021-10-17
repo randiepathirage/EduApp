@@ -13,16 +13,35 @@ const CategoryCard = props => {
     //     //alert(pressedCategory.category)
     //     navigation.navigate('Login')
     // }
+
     return (
         <TouchableOpacity
             style={styles.card}
             onPress={props.onViewCourses}
             key={props.id}>
-            <Image
-                style={styles.cardImage}
-                source={{ uri: props.categoryImage }}
-            //source={require(props.categoryImage)}
-            />
+            {
+                props.category == 'Science' ?
+                    <Image
+                        style={styles.cardImage}
+                        source={require(`../assets/science.png`)}
+                    /> :
+                    props.category == 'Art' ?
+                        <Image
+                            style={styles.cardImage}
+                            source={require(`../assets/art.png`)}
+                        /> :
+                        props.category == 'Mathematics' ?
+                            <Image
+                                style={styles.cardImage}
+                                source={require(`../assets/maths.png`)}
+                            /> :
+                            <Image
+                                style={styles.cardImage}
+                                source={require(`../assets/history.png`)}
+                            />
+
+            }
+
             <Text style={styles.title}>{props.category}</Text>
         </TouchableOpacity>
     )
@@ -46,8 +65,8 @@ const styles = StyleSheet.create({
     },
     cardImage: {
         width: 135,
-        height: 115,
+        height: 105,
         marginTop: 10,
-        margin: 10
+        marginHorizontal: 10
     }
 });
