@@ -64,7 +64,6 @@ const Explore = props => {
             />
 
         </SafeAreaView>
-
     );
 }
 

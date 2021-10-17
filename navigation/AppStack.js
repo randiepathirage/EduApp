@@ -3,24 +3,22 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import Subcriptions from '../screens/Subcriptions';
 import ContributionsStack from '../navigation/ContributionsStack';
 import ExploreStack from '../navigation/ExploreStack';
 import Profile from '../screens/Profile';
+import SubscriptionStack from './SubscriptionStack';
 
-
-const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
 const AppStack = () => {
     return (
         <Tab.Navigator
-            initialRouteName="Subcriptions"
+            initialRouteName="Subscriptions"
             activeColor="#fff"
         >
             <Tab.Screen
-                name="Subcriptions"
-                component={Subcriptions}
+                name="Subscriptions"
+                component={SubscriptionStack}
                 options={{
                     tabBarLabel: 'Favourites',
                     tabBarColor: '#689454',

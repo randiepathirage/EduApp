@@ -13,31 +13,28 @@ export default function Contributions(props) {
 
     const articleRef = firebase.firestore().collection('Articles');
 
-    const [token, setToken] = useState('');
-    AsyncStorage.getItem('userToken')
-        .then((value) => {
-            setToken(value);
-        })
-    console.log(token)
-
     useEffect(() => {
-        articleRef
-            .where('authorID', '==', '1bIyPboPcrQOPqd5sgyO5w7I6vL2')
-            .onSnapshot(
-                querySnapshot => {
-                    const list = [];
-                    const idL = [];
-                    querySnapshot.forEach(documentSnapshot => {
-                        list.push(documentSnapshot.data());
-                        idL.push(documentSnapshot.id);
-                    });
-                    setArticles(list);
-                    setIdList(idL);
-                },
-                (error) => {
-                    console.log(error);
-                }
-            );
+        const retrieveToken = async () => {
+            const val = await AsyncStorage.getItem('userToken')
+            articleRef
+                .where('authorID', '==', val)
+                .onSnapshot(
+                    querySnapshot => {
+                        const list = [];
+                        const idL = [];
+                        querySnapshot.forEach(documentSnapshot => {
+                            list.push(documentSnapshot.data());
+                            idL.push(documentSnapshot.id);
+                        });
+                        setArticles(list);
+                        setIdList(idL);
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                );
+        };
+        retrieveToken();
     }, []);
 
 

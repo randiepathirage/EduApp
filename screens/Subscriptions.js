@@ -1,64 +1,51 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { firebase } from './../firebaseconfig';
+import { firebase } from '../firebaseconfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import CourseCard from '../components/CourseCard';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { View, Text, FlatList, SafeAreaView, StatusBar, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-const Courses = ({ route, navigation }) => {
+import FavCard from '../navigation/FavCard';
 
-    const [articles, setArticles] = useState([]);
+export default function Subscriptions({ navigation }) {
+
+    const [favArticles, setFavArticles] = useState([]);
     const [idList, setIdList] = useState([]);
-    const [category, setCategory] = useState([]);
 
-    const { articleCat } = route.params;
-
-    const articleRef = firebase.firestore().collection('Articles');
+    const favRef = firebase.firestore().collection('Favourites');
 
     const [token, setToken] = useState('');
     AsyncStorage.getItem('userToken')
         .then((value) => {
             setToken(value);
         })
-    console.log(token)
 
     useEffect(() => {
-        setCategory(articleCat.category)
-        articleRef
-            .where('category', '==', articleCat.category)
-            .onSnapshot(
-                querySnapshot => {
-                    const list = [];
-                    const idL = [];
-                    querySnapshot.forEach(documentSnapshot => {
-                        list.push(documentSnapshot.data());
-                        idL.push(documentSnapshot.id);
-                    });
-                    setArticles(list);
-                    setIdList(idL);
-                },
-                (error) => {
-                    console.log(error);
-                }
-            );
-
+        const retrieveToken = async () => {
+            const val = await AsyncStorage.getItem('userToken')
+            favRef
+                .where('userID', '==', val)
+                .onSnapshot(
+                    querySnapshot => {
+                        const list = [];
+                        const idL = [];
+                        querySnapshot.forEach(documentSnapshot => {
+                            list.push(documentSnapshot.data());
+                            idL.push(documentSnapshot.id);
+                        });
+                        setFavArticles(list);
+                        setIdList(idL);
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                );
+        };
+        retrieveToken();
     }, []);
 
-    const onBackPress = () => {
-        navigation.popToTop('Explore')
-    }
     return (
-        <SafeAreaView>
-            <View style={styles.container}>
-                <Icon style={styles.icons}
-                    name="ios-chevron-back"
-                    color='#689454'
-                    size={24}
-                    onPress={onBackPress}
-                />
-                <Text style={styles.title}>{category}</Text>
-            </View>
+        <SafeAreaView style={styles.container}>
+            <Text style={styles.title}>Favourites</Text>
             <View style={styles.formContainer}>
                 <TextInput
                     style={styles.input}
@@ -77,18 +64,18 @@ const Courses = ({ route, navigation }) => {
                 </TouchableOpacity>
             </View>
 
-            {articles && (
+            {favArticles && (
                 <View>
                     <FlatList
-                        data={articles}
+                        data={favArticles}
                         renderItem={itemdata => (
-                            <CourseCard
+                            <FavCard
                                 id={itemdata.item.id}
                                 title={itemdata.item.title}
                                 category={itemdata.item.category}
                                 content={itemdata.item.content}
-                                onViewArticle={() => {
-                                    navigation.navigate('ViewArticle', {
+                                onViewFavArticle={() => {
+                                    navigation.navigate('ViewFavArticle', {
                                         arti: itemdata.item,
                                         artiId: idList[itemdata.index],
                                     });
@@ -98,25 +85,24 @@ const Courses = ({ route, navigation }) => {
                     />
                 </View>
             )}
-
         </SafeAreaView>
-
     );
-};
-
-export default Courses;
+}
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
+
     },
-    icons: {
-        marginTop: 25,
-        marginHorizontal: 10,
+    item: {
+        backgroundColor: '#f9c2ff',
+        padding: 20,
+        marginVertical: 8,
+        marginHorizontal: 16,
     },
     title: {
         alignSelf: 'flex-start',
-        marginTop: 20,
+        marginHorizontal: 10,
+        marginVertical: 10,
         fontSize: 23,
         color: '#689454',
         fontWeight: 'bold'
@@ -131,13 +117,13 @@ const styles = StyleSheet.create({
         //flex: 1,
         //paddingLeft: 10,
         //paddingRight: 10,
+
     },
     input: {
         borderRadius: 5,
         overflow: 'hidden',
         backgroundColor: 'white',
         paddingLeft: 10,
-        flex: 1,
         marginRight: 5
     },
     button: {
