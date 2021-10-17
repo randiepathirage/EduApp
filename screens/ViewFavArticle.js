@@ -25,19 +25,13 @@ const ViewFavArticle = ({ route, navigation }) => {
         setTitle(arti.title)
     }, []);
 
-    const onAddFavPress = () => {
-        const timestamp = firebase.firestore.FieldValue.serverTimestamp();
-        const data = {
-            title: title,
-            category: cat,
-            content: content,
-            userID: token,
-            createdAt: timestamp,
-        };
+    const onRemoveFavPress = () => {
         favRef
-            .add(data)
-            .then((_doc) => {
-                navigation.navigate('Explore')
+            .doc(artiId)
+            .delete()
+            .then(() => {
+                console.log("Document successfully deleted!");
+                navigation.navigate('Subscriptions')
             })
             .catch((error) => {
                 alert(error);
@@ -65,7 +59,7 @@ const ViewFavArticle = ({ route, navigation }) => {
                 <Text style={styles.input}>{content}</Text>
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={onAddFavPress}
+                    onPress={onRemoveFavPress}
                 >
                     <Text style={styles.buttonText}>Remove Fav</Text>
                 </TouchableOpacity>
