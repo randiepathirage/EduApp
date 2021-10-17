@@ -6,10 +6,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import CourseCard from '../components/CourseCard';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const Courses = props => {
+const Courses = ({ route, navigation }) => {
 
     const [articles, setArticles] = useState([]);
     const [idList, setIdList] = useState([]);
+    const [category, setCategory] = useState([]);
+
+    const { articleCat } = route.params;
 
     const articleRef = firebase.firestore().collection('Articles');
 
@@ -21,8 +24,9 @@ const Courses = props => {
     console.log(token)
 
     useEffect(() => {
+        setCategory(articleCat.category)
         articleRef
-            // .where('authorID', '=', token)
+            .where('category', '==', 'Art')
             .onSnapshot(
                 querySnapshot => {
                     const list = [];
@@ -38,10 +42,11 @@ const Courses = props => {
                     console.log(error);
                 }
             );
+
     }, []);
 
     const onBackPress = () => {
-        props.navigation.navigate('Explore')
+        navigation.navigate('Explore')
     }
     return (
         <SafeAreaView>
@@ -52,7 +57,7 @@ const Courses = props => {
                     size={24}
                     onPress={onBackPress}
                 />
-                <Text style={styles.title}>Art</Text>
+                <Text style={styles.title}>{category}</Text>
             </View>
             <View style={styles.formContainer}>
                 <TextInput
@@ -82,12 +87,12 @@ const Courses = props => {
                                 title={itemdata.item.title}
                                 category={itemdata.item.category}
                                 content={itemdata.item.content}
-                            // onViewCourses={() => {
-                            //     props.navigation.navigate('Courses', {
-                            //         category: itemdata.category
-                            //     });
-                            //     console.log('Hello');
-                            // }}
+                                onViewArticle={() => {
+                                    navigation.navigate('ViewArticle', {
+                                        arti: itemdata.item,
+                                        artiId: idList[itemdata.index],
+                                    });
+                                }}
                             />
                         )}
                     />

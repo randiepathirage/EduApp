@@ -8,7 +8,7 @@ const CourseCard = props => {
     return (
         <TouchableOpacity
             style={styles.card}
-            //onPress={props.onViewCourses}
+            onPress={props.onViewArticle}
             key={props.id}>
 
             <Text style={styles.title}>{props.title}</Text>

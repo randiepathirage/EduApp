@@ -22,7 +22,7 @@ const AppStack = () => {
                 name="Subcriptions"
                 component={Subcriptions}
                 options={{
-                    tabBarLabel: 'Subcriptions',
+                    tabBarLabel: 'Favourites',
                     tabBarColor: '#689454',
                     tabBarIcon: ({ color }) => (
                         <Icon name="ios-star" color={color} size={24} />

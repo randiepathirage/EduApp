@@ -1,35 +1,46 @@
 import React, { useState, useEffect } from 'react'
 import { firebase } from './../firebaseconfig';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const ViewContribution = ({ route, navigation }) => {
-    const [contriTitle, setContriTitle] = useState('');
-    const [contriCat, setContriCat] = useState('');
+const ViewArticle = ({ route, navigation }) => {
+    const [title, setTitle] = useState('');
+    const [cat, setCat] = useState('');
     const [content, setContent] = useState('');
 
     const { arti, artiId } = route.params;
-    console.log(arti)
 
     const articleRef = firebase.firestore().collection('Articles');
 
+    const [token, setToken] = useState('');
+    AsyncStorage.getItem('userToken')
+        .then((value) => {
+            setToken(value);
+        })
+
     useEffect(() => {
-        setContriCat(arti.category)
+        setCat(arti.category)
         setContent(arti.content)
-        setContriTitle(arti.title)
+        setTitle(arti.title)
     }, []);
 
-    const onUpdatePress = props => {
+    const onAddNewPress = () => {
         if (contriCat.length > 0 && contriTitle.length > 0 && content.length > 0) {
+            const timestamp = firebase.firestore.FieldValue.serverTimestamp();
             const data = {
                 title: contriTitle,
                 category: contriCat,
                 content: content,
+                authorID: token,
+                createdAt: timestamp,
             };
             articleRef
-                .doc(artiId)
-                .update(data)
-                .then(() => {
+                .add(data)
+                .then((_doc) => {
+                    setTitle('');
+                    setCat('');
+                    setContent('');
                     navigation.navigate('Contributions')
                 })
                 .catch((error) => {
@@ -39,7 +50,7 @@ const ViewContribution = ({ route, navigation }) => {
     };
 
     const onBackPress = () => {
-        navigation.navigate('Contributions')
+        navigation.navigate('Explore')
     }
 
     return (
@@ -47,46 +58,20 @@ const ViewContribution = ({ route, navigation }) => {
             <View style={styles.container}>
                 <Icon style={styles.icons}
                     name="ios-chevron-back"
-                    color='#05375a'
+                    color='#689454'
                     size={24}
                     onPress={onBackPress}
                 />
-                <Text style={styles.title}>Update Atricle</Text>
+                <Text style={styles.title}>{title}</Text>
             </View>
             <View style={styles.formContainer}>
-                <TextInput
-                    style={styles.titleInput}
-                    placeholder="Category"
-                    placeholderTextColor='#aaaaaa'
-                    onChangeText={(text) => setContriCat(text)}
-                    value={contriCat}
-                    underlineColorAndroid='transparent'
-                    autoCapitalize='none'
-                />
-                <TextInput
-                    style={styles.titleInput}
-                    placeholder='Article Title'
-                    placeholderTextColor='#aaaaaa'
-                    onChangeText={(text) => setContriTitle(text)}
-                    value={contriTitle}
-                    underlineColorAndroid='transparent'
-                    autoCapitalize='none'
-                />
 
-                <TextInput
-                    style={styles.input}
-                    placeholder='Write Content'
-                    placeholderTextColor='#aaaaaa'
-                    onChangeText={(text) => setContent(text)}
-                    value={content}
-                    underlineColorAndroid='transparent'
-                    autoCapitalize='none'
-                />
+                <Text style={styles.input}>{content}</Text>
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={onUpdatePress}
+                    onPress={onAddNewPress}
                 >
-                    <Text style={styles.buttonText}>Update</Text>
+                    <Text style={styles.buttonText}>Add To Fav</Text>
                 </TouchableOpacity>
             </View>
 
@@ -94,14 +79,14 @@ const ViewContribution = ({ route, navigation }) => {
     )
 }
 
-export default ViewContribution;
+export default ViewArticle;
 
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
     },
     item: {
-        backgroundColor: '#f9c2ff',
+        backgroundColor: '#689454',
         padding: 20,
         marginVertical: 8,
         marginHorizontal: 16,
@@ -110,7 +95,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
         marginTop: 20,
         fontSize: 23,
-        color: '#05375a',
+        color: '#689454',
         fontWeight: 'bold'
     },
     icons: {
@@ -128,12 +113,12 @@ const styles = StyleSheet.create({
     },
     input: {
         borderRadius: 5,
-        height: 100,
+        height: 300,
         overflow: 'hidden',
         backgroundColor: 'white',
-        paddingLeft: 10,
         marginRight: 10,
-        marginBottom: 10
+        marginBottom: 10,
+        padding: 20
     },
     titleInput: {
         height: 35,
@@ -147,8 +132,8 @@ const styles = StyleSheet.create({
     button: {
         height: 30,
         borderRadius: 5,
-        backgroundColor: '#05375a',
-        width: 73,
+        backgroundColor: '#689454',
+        width: 80,
         alignItems: "center",
         alignSelf: 'flex-end',
         marginRight: 10,
@@ -156,6 +141,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: 'white',
-        fontSize: 14
+        fontSize: 14,
+        fontWeight: 400
     },
 });

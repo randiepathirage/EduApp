@@ -23,14 +23,6 @@ const data1 = [
         id: '4',
         category: 'History'
     },
-    // {
-    //     id: '5',
-    //     category: 'Technology'
-    // },
-    // {
-    //     id: '6',
-    //     category: 'Other'
-    // },
 ];
 
 const Explore = props => {
@@ -63,7 +55,7 @@ const Explore = props => {
                         category={itemdata.item.category}
                         onViewCourses={() => {
                             props.navigation.navigate('Courses', {
-                                category: itemdata.category
+                                articleCat: itemdata.item
                             });
                             console.log('Hello');
                         }}
