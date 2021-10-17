@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, FlatList, SafeAreaView, StatusBar, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, FlatList, SafeAreaView, StatusBar, StyleSheet, TextInput, TouchableOpacity, Dimensions } from 'react-native'
 
 import CategoryCard from '../components/CategoryCard';
 
@@ -69,6 +69,9 @@ const Explore = props => {
 
 export default Explore;
 
+const { height } = Dimensions.get("screen");
+const height_box = height * 0.20;
+
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center'
@@ -81,6 +84,7 @@ const styles = StyleSheet.create({
     },
     title: {
         alignSelf: 'flex-start',
+        marginTop: 30,
         marginHorizontal: 10,
         marginVertical: 10,
         fontSize: 23,
@@ -104,7 +108,8 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         backgroundColor: 'white',
         paddingLeft: 10,
-        marginRight: 5
+        marginRight: 5,
+        width: height_box
     },
     button: {
         height: 30,

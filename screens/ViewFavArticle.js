@@ -74,6 +74,7 @@ export default ViewFavArticle;
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
+        marginTop: 20
     },
     item: {
         backgroundColor: '#689454',
@@ -131,7 +132,6 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: 'white',
-        fontSize: 14,
-        fontWeight: 400
+        fontSize: 14
     },
 });

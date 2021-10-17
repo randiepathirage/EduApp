@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList } from 'react-native'
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList, Dimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { firebase } from './../firebaseconfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CourseCard from '../components/CourseCard';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { Restart } from 'fiction-expo-restart';
 
 const Courses = ({ route, navigation }) => {
 
@@ -46,7 +47,8 @@ const Courses = ({ route, navigation }) => {
     }, []);
 
     const onBackPress = () => {
-        navigation.goBack('Explore')
+        navigation.navigate('Explore')
+        Restart();
     }
     return (
         <SafeAreaView>
@@ -106,6 +108,9 @@ const Courses = ({ route, navigation }) => {
 
 export default Courses;
 
+const { height } = Dimensions.get("screen");
+const height_box = height * 0.20;
+
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
@@ -124,9 +129,7 @@ const styles = StyleSheet.create({
     formContainer: {
         flexDirection: 'row',
         // height: 20,
-        marginTop: 10,
-        marginBottom: 10,
-        marginLeft: 10,
+        margin: 10,
         alignSelf: 'flex-start'
         //flex: 1,
         //paddingLeft: 10,
@@ -138,7 +141,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         paddingLeft: 10,
         flex: 1,
-        marginRight: 5
+        marginRight: 5,
+        width: height_box
     },
     button: {
         height: 30,

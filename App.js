@@ -3,7 +3,6 @@ import React, { useEffect, useState, useContext } from 'react';
 //import firebase from 'firebase';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { AuthProvider } from './navigation/AuthProvider';
 import AuthStack from './navigation/AuthStack';
 import "firebase/auth"
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -15,11 +14,24 @@ const Stack = createStackNavigator();
 export default function App() {
 
   const [token, setToken] = useState('');
-  AsyncStorage.getItem('userToken')
-    .then((value) => {
-      setToken(value);
-    })
-  console.log(token)
+  const [loading, setLoading] = useState(true);
+
+
+  const _storeData = async c => {
+    try {
+      AsyncStorage.getItem('userToken')
+        .then((value) => {
+          setToken(value);
+        })
+      console.log(token)
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+
+      // Error saving data
+    }
+  };
   //const { user, setUser } = useContext(AuthContext);
   // const [initializing, setInitializing] = useState(true);
 
@@ -35,14 +47,16 @@ export default function App() {
 
   // if (initializing) return null;
 
+  useEffect(() => {
+    _storeData();
+  }, []);
+
 
   return (
-    <AuthProvider>
-      <NavigationContainer>
-        {/* <AuthStack /> */}
-        {/* <AppStack /> */}
-        {token != 'null' ? <AppStack /> : <AuthStack />}
-      </NavigationContainer>
-    </AuthProvider>
+    <NavigationContainer>
+      {/* <AuthStack /> */}
+      {/* <AppStack /> */}
+      {token != 'null' ? <AppStack /> : <AuthStack />}
+    </NavigationContainer>
   );
 }

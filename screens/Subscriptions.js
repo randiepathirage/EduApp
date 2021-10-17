@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { firebase } from '../firebaseconfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View, Text, FlatList, SafeAreaView, StatusBar, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
+import { View, Text, FlatList, SafeAreaView, StatusBar, StyleSheet, TouchableOpacity, TextInput, Dimensions } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import FavCard from '../navigation/FavCard';
@@ -44,7 +44,7 @@ export default function Subscriptions({ navigation }) {
     }, []);
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView >
             <Text style={styles.title}>Favourites</Text>
             <View style={styles.formContainer}>
                 <TextInput
@@ -89,10 +89,10 @@ export default function Subscriptions({ navigation }) {
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
+const { height } = Dimensions.get("screen");
+const height_box = height * 0.20;
 
-    },
+const styles = StyleSheet.create({
     item: {
         backgroundColor: '#f9c2ff',
         padding: 20,
@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     },
     title: {
         alignSelf: 'flex-start',
+        marginTop: 30,
         marginHorizontal: 10,
         marginVertical: 10,
         fontSize: 23,
@@ -124,7 +125,8 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         backgroundColor: 'white',
         paddingLeft: 10,
-        marginRight: 5
+        marginRight: 5,
+        width: height_box
     },
     button: {
         height: 30,

@@ -31,13 +31,12 @@ const styles = StyleSheet.create({
     title: {
         color: '#fff',
         fontSize: 15,
-        fontWeight: '450',
+        fontWeight: "bold",
         marginBottom: 5,
     },
     category: {
         color: '#fff',
         fontSize: 12,
-        fontWeight: '350',
         marginBottom: 5,
     }
 });

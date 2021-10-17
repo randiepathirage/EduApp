@@ -3,6 +3,7 @@ import { firebase } from './../firebaseconfig';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { Restart } from 'fiction-expo-restart';
 
 const ViewArticle = ({ route, navigation }) => {
     const [title, setTitle] = useState('');
@@ -38,6 +39,7 @@ const ViewArticle = ({ route, navigation }) => {
             .add(data)
             .then((_doc) => {
                 navigation.navigate('Explore')
+                Restart();
             })
             .catch((error) => {
                 alert(error);
@@ -70,7 +72,6 @@ const ViewArticle = ({ route, navigation }) => {
                     <Text style={styles.buttonText}>Add To Fav</Text>
                 </TouchableOpacity>
             </View>
-
         </SafeAreaView>
     )
 }
@@ -80,6 +81,7 @@ export default ViewArticle;
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
+        marginTop: 20
     },
     item: {
         backgroundColor: '#689454',
@@ -129,7 +131,7 @@ const styles = StyleSheet.create({
         height: 30,
         borderRadius: 5,
         backgroundColor: '#689454',
-        width: 80,
+        width: 90,
         alignItems: "center",
         alignSelf: 'flex-end',
         marginRight: 10,
@@ -138,6 +140,6 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'white',
         fontSize: 14,
-        fontWeight: 400
+        fontWeight: 'bold'
     },
 });

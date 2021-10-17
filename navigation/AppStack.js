@@ -13,11 +13,11 @@ const Tab = createMaterialBottomTabNavigator();
 const AppStack = () => {
     return (
         <Tab.Navigator
-            initialRouteName="Subscriptions"
+            initialRouteName="SubscriptionsStack"
             activeColor="#fff"
         >
             <Tab.Screen
-                name="Subscriptions"
+                name="SubscriptionsStack"
                 component={SubscriptionStack}
                 options={{
                     tabBarLabel: 'Favourites',
@@ -28,7 +28,7 @@ const AppStack = () => {
                 }}
             />
             <Tab.Screen
-                name="Contributions"
+                name="ContributionsStack"
                 component={ContributionsStack}
                 options={{
                     tabBarLabel: 'Contributions',
@@ -39,7 +39,7 @@ const AppStack = () => {
                 }}
             />
             <Tab.Screen
-                name="Explore"
+                name="ExploreStack"
                 component={ExploreStack}
                 options={{
                     tabBarLabel: 'Explore',

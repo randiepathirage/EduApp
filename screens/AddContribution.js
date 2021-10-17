@@ -100,6 +100,7 @@ export default function AddContribution(props) {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
+        marginTop: 20
     },
     item: {
         backgroundColor: '#f9c2ff',

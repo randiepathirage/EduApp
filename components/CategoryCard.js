@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     title: {
         color: '#fff',
         fontSize: 20,
-        fontWeight: '400',
+        fontWeight: 'bold',
         marginBottom: 10,
     },
     cardImage: {
